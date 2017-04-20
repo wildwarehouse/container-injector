@@ -15,4 +15,4 @@
 #   You should have received a copy of the GNU General Public License
 #   along with container-injector.  If not, see <http://www.gnu.org/licenses/>.
 
-sudo /usr/local/sbin/${NAME}.sh
+sudo /usr/local/sbin/${NAME}.sh "${@}"

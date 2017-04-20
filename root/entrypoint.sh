@@ -59,11 +59,11 @@ checkit(){
     ([ ! -z "${SBIN}" ] || (echo sbin is not specified && exit 71)) &&
     ([ ! -z "${CONTAINER}" ] || (echo container is not specified && exit 72)) &&
     ([ ! -z "${NAME}" ] || (echo name is not specified && exit 73)) &&
-    sed -e "s#\${NAME}#${NAME}#" /opt/docker/bin.sh | docker container run --interactive --rm --volume ${BIN}:/usr/local/bin --workdir /usr/local/bin alpine:3.4 tee ${NAME} &&
+    sed -e "s#\${NAME}#${NAME}#" /opt/docker/bin.sh | docker run --interactive --rm --volume ${BIN}:/usr/local/bin --workdir /usr/local/bin alpine:3.4 tee ${NAME} &&
     docker run --interactive --rm --volume ${BIN}:/usr/local/bin --workdir /usr/local/bin alpine:3.4 chmod 0555 ${NAME} &&
     echo SED1 "s#\${NAME}#${NAME}#" &&
     echo SED2 "s#\${CONTAINER}##" &&
-    sed -e "s#\${NAME}#${NAME}#" -e "s#\${CONTAINER}#\${CONTAINER[*]}#" /opt/docker/sbin.sh | docker container run --interactive --rm --volume ${SBIN}:/usr/local/sbin --workdir /usr/local/sbin alpine:3.4 tee ${NAME}.sh &&
+    sed -e "s#\${NAME}#${NAME}#" -e "s#\${CONTAINER}#${CONTAINER[*]}#" /opt/docker/sbin.sh | docker run --interactive --rm --volume ${SBIN}:/usr/local/sbin --workdir /usr/local/sbin alpine:3.4 tee ${NAME}.sh &&
     docker run --interactive --rm --volume ${SBIN}:/usr/local/sbin --workdir /usr/local/sbin alpine:3.4 chmod 0500 ${NAME}.sh &&
-    sed -e "s#\${NAME}#${NAME}#" /opt/docker/sudo | docker container run --interactive --rm --volume ${SUDO}:/etc/sudoers.d --workdir /etc/sudoers.d alpine:3.4 tee ${NAME} &&
+    sed -e "s#\${NAME}#${NAME}#" /opt/docker/sudo | docker run --interactive --rm --volume ${SUDO}:/etc/sudoers.d --workdir /etc/sudoers.d alpine:3.4 tee ${NAME} &&
     docker run --interactive --rm --volume ${SUDO}:/etc/sudoers.d --workdir /etc/sudoers.d alpine:3.4 chmod 0444 ${NAME}
